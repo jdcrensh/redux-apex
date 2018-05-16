@@ -2,7 +2,6 @@
   "name": "redux-apex",
   "version": "0.0.1",
   "description": "Redux module for Salesforce Remote Actions",
-  "private": true,
   "main": "cjs/index.js",
   "module": "es/index.js",
   "files": [
