@@ -53,6 +53,21 @@ import {
 } from 'redux-apex';
 ```
 
+### Actions
+
+Return value of action creators (to be consumed by your reducer)
+
+```
+type: REMOTE_ACTION_REQUEST
+payload: { method, params }
+
+type: REMOTE_ACTION_SUCCESS
+payload: { method, res }
+
+type: REMOTE_ACTION_FAILURE
+payload: { method, err }
+```
+
 ### Operations
 
 An operation factory is exported that can be used to create a dispatchable [thunk](https://github.com/reduxjs/redux-thunk) for each remote method on the backing Apex controller. The resulting operations dispatch `REQUEST`, `SUCCESS`, and `FAILURE` actions that are sent to the `remoteActionReducer`.
@@ -83,7 +98,7 @@ There are a number of selector factories that can be used for accessing any piec
 - `getState(state)` {object} the full `apex` state
 - `getRemoteActionState(method)(state)` {object} the remote action's full state
 - `getRemoteActionResult(method)(state)` {any} the most recent return value of the remote action
-- `getRemoteActionError(method)(state)` {string} the most recent error of the remote action
+- `getRemoteActionError(method)(state)` {any} the most recent error of the remote action
 - `getRemoteActionStatus(method)(state)` {boolean} the status where `false` is a failure
 - `getRemoteActionLoading(method)(state)` {boolean} loading status
 - `getRemoteActionStarted(method)(state)` {integer} date in milliseconds when last called
