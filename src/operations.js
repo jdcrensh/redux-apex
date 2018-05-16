@@ -13,7 +13,7 @@ const remoteAction = (controller, method, getActionFn) => {
 };
 
 export function createRemoteAction(controller, getActionFn) {
-  return method => (...params) => async (dispatch, getState) => {
+  return method => (...params) => async dispatch => {
     try {
       dispatch(actions.remoteActionRequest({ method, params }));
       const res = await remoteAction(controller, method, getActionFn)(

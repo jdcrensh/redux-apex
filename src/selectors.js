@@ -10,7 +10,7 @@ export const getRemoteActionError = method => state =>
   getRemoteActionState(method)(state).err;
 
 export const getRemoteActionStatus = method => state => {
-  const status = getRemoteActionState(method)(state).status;
+  const { status } = getRemoteActionState(method)(state);
   return status == null || status;
 };
 
