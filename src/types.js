@@ -1,0 +1,3 @@
+export const REMOTE_ACTION_REQUEST = '@@redux-apex/REMOTE_ACTION_REQUEST';
+export const REMOTE_ACTION_SUCCESS = '@@redux-apex/REMOTE_ACTION_SUCCESS';
+export const REMOTE_ACTION_FAILURE = '@@redux-apex/REMOTE_ACTION_FAILURE';

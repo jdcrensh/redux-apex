@@ -1,0 +1,45 @@
+{
+  "name": "redux-apex",
+  "version": "0.0.1",
+  "description": "Redux module for Salesforce Remote Actions",
+  "private": true,
+  "main": "cjs/index.js",
+  "module": "es/index.js",
+  "files": [
+    "es",
+    "cjs"
+  ],
+  "scripts": {
+    "build": "node scripts/build"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "es5",
+    "proseWrap": "always"
+  },
+  "dependencies": {
+    "babel-runtime": "^6.26.0",
+    "promisify-remote-actions": "^1.1.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^8.2.3",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-transform-es2015-destructuring": "^6.23.0",
+    "babel-plugin-transform-export-extensions": "^6.22.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.7.0",
+    "chalk": "^2.4.1",
+    "eslint": "^4.9.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jsx-a11y": "^6.0.2",
+    "eslint-plugin-prettier": "^2.6.0",
+    "eslint-plugin-react": "^7.4.0",
+    "fs-extra": "^6.0.1",
+    "prettier": "^1.12.1"
+  }
+}
