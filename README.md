@@ -84,12 +84,57 @@ export const SAVE = 'save';
 import { createRemoteAction } from 'redux-apex';
 import * as methods from './methods';
 
-const ctrl = 'MyController'; // name of the remoting controller
+const ctrl = 'MyController'; // name of the apex controller
 const factory = createRemoteAction(ctrl);
 
 export const fetchAccounts = factory(methods.FETCH_ACCOUNTS);
 export const fetchContacts = factory(methods.FETCH_CONTACTS);
 export const save = factory(methods.SAVE);
+```
+
+#### Development/Test Mocking
+
+The `createRemoteAction` factory can take an optional function as its second argument that will intercept the remote action call. This can be used for mocking in development or test environments.
+
+`modules/apex/factory.mock.js`
+```js
+const accounts = {
+  '001000000000001': {
+    Id: '001000000000001',
+    Name: 'Foo',
+  },
+  '001000000000002': {
+    Id: '001000000000002',
+    Name: 'Bar',
+  },
+};
+
+const MockController = {
+  async fetchAccount(id) {
+    return accounts[id];
+  },
+};
+
+export default (controller, method) => (...args) => {
+  const data = args.slice(0, -2);
+  const [callback] = args.slice(-2, -1);
+
+  if (!MockController[method]) {
+    throw new Error(`method not implemented in mock: ${controller}.${method}`);
+  }
+  MockController[method](...data).then(res => {
+    callback(res, { status: true });
+  });
+};
+```
+
+`modules/apex/operations.js`
+```diff
+-const factory = createRemoteAction(ctrl);
++const factory = createRemoteAction(
++  ctrl,
++  process.env.NODE_ENV !== 'production' ? require('./factory.mock'): null
++);
 ```
 
 ### Selectors
