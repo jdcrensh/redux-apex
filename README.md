@@ -96,7 +96,7 @@ export const save = factory(methods.SAVE);
 
 The `createRemoteAction` factory can take an optional function as its second argument that will intercept the remote action call. This can be used for mocking in development or test environments.
 
-`modules/apex/factory.mock.js`
+`modules/apex/remoting.mock.js`
 ```js
 const accounts = {
   '001000000000001': {
@@ -133,7 +133,7 @@ export default (controller, method) => (...args) => {
 -const factory = createRemoteAction(ctrl);
 +const factory = createRemoteAction(
 +  ctrl,
-+  process.env.NODE_ENV !== 'production' ? require('./factory.mock'): null
++  process.env.NODE_ENV !== 'production' ? require('./remoting.mock'): null
 +);
 ```
 
