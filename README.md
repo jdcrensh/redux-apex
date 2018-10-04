@@ -84,11 +84,12 @@ export const SAVE = 'save';
 import { createRemoteAction } from 'redux-apex';
 import * as methods from './methods';
 
-const ctrl = window.MyController; // reference to the global javascript remoting controller
+const ctrl = 'MyController'; // name of the remoting controller
+const factory = createRemoteAction(ctrl);
 
-export const fetchAccounts = createRemoteAction(ctrl)(methods.FETCH_ACCOUNTS);
-export const fetchContacts = createRemoteAction(ctrl)(methods.FETCH_CONTACTS);
-export const save = createRemoteAction(ctrl)(methods.SAVE);
+export const fetchAccounts = factory(methods.FETCH_ACCOUNTS);
+export const fetchContacts = factory(methods.FETCH_CONTACTS);
+export const save = factory(methods.SAVE);
 ```
 
 ### Selectors
