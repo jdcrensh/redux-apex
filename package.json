@@ -1,6 +1,6 @@
 {
   "name": "redux-apex",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Redux module for Salesforce Remote Actions",
   "main": "cjs/index.js",
   "module": "es/index.js",
