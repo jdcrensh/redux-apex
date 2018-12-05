@@ -59,13 +59,13 @@ Return value of action creators (to be consumed by your reducer)
 
 ```
 type: REMOTE_ACTION_REQUEST
-payload: { method, params }
+payload: { controller, method, params }
 
 type: REMOTE_ACTION_SUCCESS
-payload: { method, res }
+payload: { controller, method, params, res }
 
 type: REMOTE_ACTION_FAILURE
-payload: { method, err }
+payload: { controller, method, params, err }
 ```
 
 ### Operations
