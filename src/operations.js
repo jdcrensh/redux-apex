@@ -14,16 +14,17 @@ const remoteAction = (controller, method, getActionFn) => {
 
 export function createRemoteAction(controller, getActionFn) {
   return method => (...params) => async dispatch => {
+    let res;
+    const payload = { controller, method, params };
     try {
-      dispatch(actions.remoteActionRequest({ method, params }));
-      const res = await remoteAction(controller, method, getActionFn)(
-        ...params
-      );
-      dispatch(actions.remoteActionSuccess({ method, res }));
+      dispatch(actions.remoteActionRequest(payload));
+      res = await remoteAction(controller, method, getActionFn)(...params);
+      dispatch(actions.remoteActionSuccess({ ...payload, res }));
     } catch (err) {
       dispatch(
-        actions.remoteActionFailure({ method, err: serializeError(err) })
+        actions.remoteActionFailure({ ...payload, err: serializeError(err) })
       );
     }
+    return res;
   };
 }
