@@ -3,8 +3,10 @@ export const getState = state => state.apex || {};
 export const getRemoteActionState = method => state =>
   getState(state)[method] || {};
 
-export const getRemoteActionResult = method => state =>
-  getRemoteActionState(method)(state).res;
+export const getRemoteActionResult = (method, defaultValue) => state => {
+  const { res } = getRemoteActionState(method)(state);
+  return res != null ? res : defaultValue;
+};
 
 export const getRemoteActionError = method => state =>
   getRemoteActionState(method)(state).err;

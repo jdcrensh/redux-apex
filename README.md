@@ -143,7 +143,7 @@ There are a number of selector factories that can be used for accessing any piec
 
 - `getState(state)` {object} the full `apex` state
 - `getRemoteActionState(method)(state)` {object} the remote action's full state
-- `getRemoteActionResult(method)(state)` {any} the most recent return value of the remote action
+- `getRemoteActionResult(method, defaultValue)(state)` {any} the most recent return value of the remote action
 - `getRemoteActionError(method)(state)` {any} the most recent error of the remote action
 - `getRemoteActionStatus(method)(state)` {boolean} the status where `false` is a failure
 - `getRemoteActionLoading(method)(state)` {boolean} loading status
