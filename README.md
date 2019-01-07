@@ -1,4 +1,7 @@
 # redux-apex
+
+[![npm package][npm-badge]][npm]
+
 Simple Redux bindings for JavaScript Remoting in Salesforce
 
 ## Install
@@ -172,3 +175,6 @@ const mapActions = {
 
 export default connect(mapState, mapActions)(App);
 ```
+
+[npm-badge]: https://img.shields.io/npm/v/redux-apex.png?style=flat-square
+[npm]: https://www.npmjs.org/package/redux-apex
