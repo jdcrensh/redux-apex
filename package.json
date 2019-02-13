@@ -20,6 +20,7 @@
     "proseWrap": "always"
   },
   "dependencies": {
+    "babel-runtime": "^6.26.0",
     "promisify-remote-actions": "^1.1.0",
     "serialize-error": "^2.1.0"
   },
@@ -35,8 +36,5 @@
     "fs-extra": "^6.0.1",
     "nwb": "^0.23.0",
     "prettier": "^1.12.1"
-  },
-  "peerDependencies": {
-    "babel-runtime": "^6.26.0"
   }
 }
