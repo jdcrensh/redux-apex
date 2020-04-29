@@ -12,7 +12,8 @@ Simple Redux bindings for JavaScript Remoting in Salesforce
 
 ### Reducer
 
-The reducer is exported as `remoteActionReducer`. Selectors expect data to be located on the `apex` slice in state, eg:
+The reducer is exported as `remoteActionReducer`. Selectors expect data to be
+located on the `apex` slice in state, eg:
 
 ```js
 import { combineReducers } from 'redux';
@@ -20,11 +21,12 @@ import { remoteActionReducer } from 'redux-apex';
 
 const reducer = combineReducers({
   ...reducers,
-  apex: remoteActionReducer
+  apex: remoteActionReducer,
 });
 ```
 
 State tree:
+
 ```json
 {
   "apex": {
@@ -46,7 +48,8 @@ State tree:
 
 ### Types
 
-The package exports three action type constants. You should use these in your own reducer for loading data into your store.
+The package exports three action type constants. You should use these in your
+own reducer for loading data into your store.
 
 ```js
 import {
@@ -73,9 +76,13 @@ payload: { controller, method, params, err }
 
 ### Operations
 
-An operation factory is exported that can be used to create a dispatchable [thunk](https://github.com/reduxjs/redux-thunk) for each remote method on the backing Apex controller. The resulting operations dispatch `REQUEST`, `SUCCESS`, and `FAILURE` actions that are sent to the `remoteActionReducer`.
+An operation factory is exported that can be used to create a dispatchable
+[thunk](https://github.com/reduxjs/redux-thunk) for each remote method on the
+backing Apex controller. The resulting operations dispatch `REQUEST`, `SUCCESS`,
+and `FAILURE` actions that are sent to the `remoteActionReducer`.
 
 `modules/apex/methods.js` (optional)
+
 ```js
 export const FETCH_ACCOUNTS = 'fetchAccounts';
 export const FETCH_CONTACTS = 'fetchContacts';
@@ -83,11 +90,8 @@ export const SAVE = 'save';
 ```
 
 `modules/apex/operations.js`
-```js
-import { createRemoteAction } from 'redux-apex';
-import * as methods from './methods';
 
-const ctrl = 'MyController'; // name of the apex controller
+```js
 const factory = createRemoteAction(ctrl);
 
 export const fetchAccounts = factory(methods.FETCH_ACCOUNTS);
@@ -95,11 +99,33 @@ export const fetchContacts = factory(methods.FETCH_CONTACTS);
 export const save = factory(methods.SAVE);
 ```
 
+#### Configuration
+
+Remote actions may be configured by passing an optional config object through
+either `createRemoteAction`, the individual factory methods, or both. Individual
+config will override controller's config.
+
+`modules/apex/operations.js`
+
+```js
+const factory = createRemoteAction(ctrl, { escape: false });
+
+export const fetchAccounts = factory(methods.FETCH_ACCOUNTS);
+export const fetchContacts = factory(methods.FETCH_CONTACTS, { escape: true });
+export const save = factory(methods.SAVE);
+```
+
+For documentation on the config object, read
+[Configuring a JavaScript Remoting Request](https://developer.salesforce.com/docs/atlas.en-us.pages.meta/pages/pages_js_remoting_configuring_request.htm)
+
 #### Development/Test Mocking
 
-The `createRemoteAction` factory can take an optional function as its second argument that will intercept the remote action call. This can be used for mocking in development or test environments.
+The `createRemoteAction` factory can take an optional function as its final
+argument that will intercept the remote action call. This can be used for
+mocking in development or test environments.
 
 `modules/apex/remoting.mock.js`
+
 ```js
 const accounts = {
   '001000000000001': {
@@ -125,13 +151,14 @@ export default (controller, method) => (...args) => {
   if (!MockController[method]) {
     throw new Error(`method not implemented in mock: ${controller}.${method}`);
   }
-  MockController[method](...data).then(res => {
+  MockController[method](...data).then((res) => {
     callback(res, { status: true });
   });
 };
 ```
 
 `modules/apex/operations.js`
+
 ```diff
 -const factory = createRemoteAction(ctrl);
 +const factory = createRemoteAction(
@@ -142,28 +169,36 @@ export default (controller, method) => (...args) => {
 
 ### Selectors
 
-There are a number of selector factories that can be used for accessing any piece of the `apex` state. Each one takes the remote action method name and returns a new selector that takes the redux state.
+There are a number of selector factories that can be used for accessing any
+piece of the `apex` state. Each one takes the remote action method name and
+returns a new selector that takes the redux state.
 
 - `getState(state)` {object} the full `apex` state
 - `getRemoteActionState(method)(state)` {object} the remote action's full state
-- `getRemoteActionResult(method, defaultValue)(state)` {any} the most recent return value of the remote action
-- `getRemoteActionError(method)(state)` {any} the most recent error of the remote action
-- `getRemoteActionStatus(method)(state)` {boolean} the status where `false` is a failure
+- `getRemoteActionResult(method, defaultValue)(state)` {any} the most recent
+  return value of the remote action
+- `getRemoteActionError(method)(state)` {any} the most recent error of the
+  remote action
+- `getRemoteActionStatus(method)(state)` {boolean} the status where `false` is a
+  failure
 - `getRemoteActionLoading(method)(state)` {boolean} loading status
-- `getRemoteActionStarted(method)(state)` {integer} date in milliseconds when last called
-- `getRemoteActionCompleted(method)(state)` {integer} date in milliseconds when last completed
+- `getRemoteActionStarted(method)(state)` {integer} date in milliseconds when
+  last called
+- `getRemoteActionCompleted(method)(state)` {integer} date in milliseconds when
+  last completed
 
 ### Usage by a connected component
 
 Use the operations and selectors in your connected component:
 
 `components/App/AppContainer.js`
+
 ```js
 import * as apexOperations from 'modules/apex/operations';
 import * as apexSelectors from 'modules/apex/selectors';
 import App from './App';
 
-const mapState = state => ({
+const mapState = (state) => ({
   isSaving: apexSelectors.isSaving(state),
 });
 
